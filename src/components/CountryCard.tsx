@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { Countries } from "../types/country.type";
+import { CountriesWithIsSelect } from "../types/country.type";
 
 const CountryCard = ({
   country,
   onClickToggleHandler,
 }: {
-  country: Countries;
+  country: CountriesWithIsSelect;
   onClickToggleHandler: (cca2: string) => void;
 }) => {
   return (

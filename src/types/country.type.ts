@@ -1,3 +1,8 @@
+export type CountriesWithIsSelect = IsSelect & Countries;
+
+export type IsSelect = {
+  isSelect: boolean;
+};
 export type Countries = {
   altSpellings: string[];
   area: number;
@@ -76,5 +81,4 @@ export type Countries = {
     };
   };
   unMember: boolean;
-  isSelect: boolean;
 };

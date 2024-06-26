@@ -1,13 +1,12 @@
 import styled from "styled-components";
 import { CountriesWithIsSelect } from "../types/country.type";
 
-const CountryCard = ({
-  country,
-  onClickToggleHandler,
-}: {
+interface CountryProps {
   country: CountriesWithIsSelect;
   onClickToggleHandler: (cca2: string) => void;
-}) => {
+}
+
+const CountryCard = ({ country, onClickToggleHandler }: CountryProps) => {
   return (
     <StCardSection onClick={() => onClickToggleHandler(country.cca2)}>
       <StFlagImage src={country.flags.png} alt="flag" />

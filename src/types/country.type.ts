@@ -17,9 +17,9 @@ export type Countries = {
   cca2: string;
   cca3: string;
   ccn3: string;
-  coatOfArms?: {
-    png: string;
-    svg: string;
+  coatOfArms: {
+    png?: string;
+    svg?: string;
   };
   continents: string[];
   currencies: {

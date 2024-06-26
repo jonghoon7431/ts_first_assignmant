@@ -7,3 +7,6 @@ export async function getCountries(): Promise<Countries[]> {
   }
   return res.json();
 }
+
+//TODO region 별로 분리되는 로직
+export function sortRegion(region: string) {}

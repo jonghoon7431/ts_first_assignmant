@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { getCountries } from "../api/api.countries";
 import { CountriesWithIsSelect } from "../types/country.type";
 import CountryCard from "./CountryCard";
+import SortButtonComponent from "./SortButtonComponent";
 
 const CountryList = () => {
   const [countries, setCountries] = useState<CountriesWithIsSelect[]>([]);
@@ -41,6 +42,7 @@ const CountryList = () => {
 
   return (
     <Container>
+      <SortButtonComponent unSelected={unSelected} />
       <StH1>Favorite Countries</StH1>
       <StSelectedCountryList>
         {selectedCountries.length > 0 ? (

@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getCountries } from "../api/api.countries";
-import { Countries } from "../types/country.type";
+import { CountriesWithIsSelect } from "../types/country.type";
 import CountryCard from "./CountryCard";
 
 const CountryList = () => {
-  const [isSelect, setIsSelect] = useState<boolean>(false);
-  const [countries, setCountries] = useState<Countries[]>([]);
-  const [selectedCountries, setSelectedCountries] = useState<Countries[]>([]);
+  const [countries, setCountries] = useState<CountriesWithIsSelect[]>([]);
+  const [selectedCountries, setSelectedCountries] = useState<
+    CountriesWithIsSelect[]
+  >([]);
 
   const selected = countries.filter((country) => country.isSelect);
   const unSelected = countries.filter((country) => !country.isSelect);
@@ -17,7 +18,7 @@ const CountryList = () => {
       const response = await getCountries();
       const countriesWithSelect = response.map((country) => ({
         ...country,
-        isSelect,
+        isSelect: false,
       }));
       setCountries(countriesWithSelect);
     };
@@ -55,8 +56,7 @@ const CountryList = () => {
           <StGuideDiv>*Countries 항목을 클릭하여 선택해주세요</StGuideDiv>
         )}
       </StSelectedCountryList>
-
-      <StH1>Countries</StH1>
+      <StH1>Countries</StH1>`
       <StCountryList>
         {unSelected.map((country) => (
           <div key={country.cca2}>
@@ -79,7 +79,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  box-shadow: inset 0 0 5px gray;
+  box-shadow: inset 0 0 10px gray;
   border-radius: 1rem;
 `;
 

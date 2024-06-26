@@ -76,4 +76,5 @@ export type Countries = {
     };
   };
   unMember: boolean;
+  isSelect: boolean;
 };

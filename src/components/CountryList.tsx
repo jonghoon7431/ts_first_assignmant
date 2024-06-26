@@ -2,43 +2,70 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getCountries } from "../api/api.countries";
 import { Countries } from "../types/country.type";
+import CountryCard from "./CountryCard";
 
 const CountryList = () => {
-  const [contries, setContries] = useState<Countries[]>([]);
+  const [isSelect, setIsSelect] = useState<boolean>(false);
+  const [countries, setCountries] = useState<Countries[]>([]);
+  const [selectedCountries, setSelectedCountries] = useState<Countries[]>([]);
+
+  const selected = countries.filter((country) => country.isSelect);
+  const unSelected = countries.filter((country) => !country.isSelect);
 
   useEffect(() => {
-    getCountries().then((res) => setContries(res));
+    const fetchData = async () => {
+      const response = await getCountries();
+      const countriesWithSelect = response.map((country) => ({
+        ...country,
+        isSelect,
+      }));
+      setCountries(countriesWithSelect);
+    };
+    fetchData();
   }, []);
+
+  useEffect(() => {
+    setSelectedCountries(selected);
+  }, [countries]);
+
+  const onClickToggleHandler = (cca2: string) => {
+    setCountries((prev) =>
+      prev.map((country) =>
+        country.cca2 === cca2
+          ? { ...country, isSelect: !country.isSelect }
+          : country
+      )
+    );
+  };
 
   return (
     <Container>
       <StCountryList>
-        <h1
-          style={{
-            marginLeft: "3rem",
-          }}
-        >
-          Countries
-        </h1>
-        <StDiv>
-          {contries.map((country) => (
-            <div>
-              <StPlagImage src={country.flags.png} alt="" />
-              <h3>{country.name.common}</h3>
-              <p>{country.capital}</p>
-            </div>
-          ))}
-        </StDiv>
+        <h1>Favorite Countries</h1>
 
-        {/* <CountryCard /> */}
+        {selected.map((country) => (
+          <StDiv key={country.cca2}>
+            <CountryCard
+              country={country}
+              onClickToggleHandler={onClickToggleHandler}
+            />
+          </StDiv>
+        ))}
+
+        <h1>Countries</h1>
+
+        {unSelected.map((country) => (
+          <StDiv key={country.cca2}>
+            <CountryCard
+              country={country}
+              onClickToggleHandler={onClickToggleHandler}
+            />
+          </StDiv>
+        ))}
       </StCountryList>
     </Container>
   );
 };
-//여기에서 map 돌리고 card로 정보를 내려서 보여주라는게 대체 무슨말임????????????????????????????
-//CountryList에서 map으로 나라 정보 렌더링해서....
-//CountryCard 에서 나라의 정보를 보여줘라...
-//무슨말이지 ... 진짜 ....?
 
 const Container = styled.div`
   margin: 0 auto;
@@ -53,14 +80,9 @@ const StCountryList = styled.div`
 `;
 
 const StDiv = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 20%);
-  gap: 2rem;
+  display: flex;
+  background-color: red;
   justify-content: center;
-`;
-
-const StPlagImage = styled.img`
-  width: 14rem;
 `;
 
 export default CountryList;

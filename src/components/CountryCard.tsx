@@ -24,6 +24,9 @@ const StCardSection = styled.section`
   width: 90%;
   padding: 0.5rem;
   gap: 0.5rem;
+  &:hover {
+    box-shadow: inset 0 0 10px #7892d7;
+  }
 `;
 const StFlagImage = styled.img`
   width: 40%;

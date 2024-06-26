@@ -55,7 +55,7 @@ const CountryList = () => {
           <StGuideDiv>*Countries 항목을 클릭하여 선택해주세요</StGuideDiv>
         )}
       </StSelectedCountryList>
-      <hr />
+
       <StH1>Countries</StH1>
       <StCountryList>
         {unSelected.map((country) => (
@@ -79,7 +79,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  box-shadow: inset 0 0 10px gray;
+  box-shadow: inset 0 0 5px gray;
   border-radius: 1rem;
 `;
 

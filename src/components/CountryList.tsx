@@ -40,27 +40,31 @@ const CountryList = () => {
 
   return (
     <Container>
+      <StH1>Favorite Countries</StH1>
+      <StSelectedCountryList>
+        {selectedCountries.length > 0 ? (
+          selectedCountries.map((country) => (
+            <div key={country.cca2}>
+              <CountryCard
+                country={country}
+                onClickToggleHandler={onClickToggleHandler}
+              />
+            </div>
+          ))
+        ) : (
+          <StGuideDiv>*Countries 항목을 클릭하여 선택해주세요</StGuideDiv>
+        )}
+      </StSelectedCountryList>
+
+      <StH1>Countries</StH1>
       <StCountryList>
-        <h1>Favorite Countries</h1>
-
-        {selected.map((country) => (
-          <StDiv key={country.cca2}>
-            <CountryCard
-              country={country}
-              onClickToggleHandler={onClickToggleHandler}
-            />
-          </StDiv>
-        ))}
-
-        <h1>Countries</h1>
-
         {unSelected.map((country) => (
-          <StDiv key={country.cca2}>
+          <div key={country.cca2}>
             <CountryCard
               country={country}
               onClickToggleHandler={onClickToggleHandler}
             />
-          </StDiv>
+          </div>
         ))}
       </StCountryList>
     </Container>
@@ -68,21 +72,48 @@ const CountryList = () => {
 };
 
 const Container = styled.div`
-  margin: 0 auto;
+  margin: 2rem auto;
   box-sizing: border-box;
-  width: 90%;
+  width: 80%;
   padding: 2rem;
-`;
-
-const StCountryList = styled.div`
-  background-color: #ffffff;
-  padding: 2rem;
-`;
-
-const StDiv = styled.div`
   display: flex;
-  background-color: red;
-  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: inset 0 0 5px gray;
+  border-radius: 1rem;
+`;
+
+const StH1 = styled.h1`
+  padding: 1rem;
+`;
+
+const StGuideDiv = styled.div`
+  padding: 1rem;
+  display: flex;
+  width: 50vw;
+  color: #405eb1;
+  font-weight: bold;
+  font-size: 1.2rem;
+`;
+
+const StSelectedCountryList = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  & section {
+    border: 2px solid #7892d7;
+    border-radius: 0.5rem;
+    box-shadow: inset 0 0 5px #7892d7;
+  }
+`;
+const StCountryList = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  & section {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 0.5rem;
+  }
 `;
 
 export default CountryList;

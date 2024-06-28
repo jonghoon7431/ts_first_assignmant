@@ -3,12 +3,14 @@ import { CountriesWithIsSelect } from "../types/country.type";
 
 interface CountryProps {
   country: CountriesWithIsSelect;
-  onClickToggleHandler: (cca2: string) => void;
+  onClickToggleHandler: (cca2: string, isSelect: boolean) => void;
 }
 
 const CountryCard = ({ country, onClickToggleHandler }: CountryProps) => {
   return (
-    <StCardSection onClick={() => onClickToggleHandler(country.cca2)}>
+    <StCardSection
+      onClick={() => onClickToggleHandler(country.cca2, country.isSelect)}
+    >
       <StFlagImage src={country.flags.png} alt="flag" />
       <h3>{country.name.common}</h3>
       <p>{country.capital}</p>

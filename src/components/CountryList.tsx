@@ -3,44 +3,65 @@ import styled from "styled-components";
 import { getCountries } from "../api/api.countries";
 import { CountriesWithIsSelect } from "../types/country.type";
 import CountryCard from "./CountryCard";
+import SortButtonComponent from "./SortButtonComponent";
 
 const CountryList = () => {
-  const [countries, setCountries] = useState<CountriesWithIsSelect[]>([]);
+  const [initCountries, setInitCountries] = useState<CountriesWithIsSelect[]>(
+    []
+  );
   const [selectedCountries, setSelectedCountries] = useState<
     CountriesWithIsSelect[]
   >([]);
-
-  const selected = countries.filter((country) => country.isSelect);
-  const unSelected = countries.filter((country) => !country.isSelect);
+  const [unselectedCountries, setUnselectedCountries] = useState<
+    CountriesWithIsSelect[]
+  >([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await getCountries();
-      const countriesWithSelect = response.map((country) => ({
-        ...country,
-        isSelect: false,
-      }));
-      setCountries(countriesWithSelect);
+      const countriesWithSelect: CountriesWithIsSelect[] = response.map(
+        (country) => ({
+          ...country,
+          isSelect: false,
+        })
+      );
+      setInitCountries(countriesWithSelect);
+      setUnselectedCountries(countriesWithSelect);
     };
     fetchData();
   }, []);
 
-  useEffect(() => {
-    setSelectedCountries(selected);
-  }, [countries]);
-
   const onClickToggleHandler = (cca2: string) => {
-    setCountries((prev) =>
+    setUnselectedCountries((prev) =>
       prev.map((country) =>
         country.cca2 === cca2
           ? { ...country, isSelect: !country.isSelect }
           : country
       )
     );
+
+    setSelectedCountries((prev) => {
+      const isSelected = prev.some((country) => country.cca2 === cca2);
+      if (isSelected) {
+        return prev.filter((country) => country.cca2 !== cca2);
+      } else {
+        const selectedCountry = unselectedCountries.find(
+          (country) => country.cca2 === cca2
+        );
+        return selectedCountry
+          ? [...prev, { ...selectedCountry, isSelect: true }]
+          : prev;
+      }
+    });
   };
 
   return (
     <Container>
+      <SortButtonComponent
+        setUnselectedCountries={setUnselectedCountries}
+        initCountries={initCountries}
+        selectedCountries={selectedCountries}
+      />
       <StH1>Favorite Countries</StH1>
       <StSelectedCountryList>
         {selectedCountries.length > 0 ? (
@@ -56,9 +77,9 @@ const CountryList = () => {
           <StGuideDiv>*Countries 항목을 클릭하여 선택해주세요</StGuideDiv>
         )}
       </StSelectedCountryList>
-      <StH1>Countries</StH1>`
+      <StH1>Countries</StH1>
       <StCountryList>
-        {unSelected.map((country) => (
+        {unselectedCountries.map((country) => (
           <div key={country.cca2}>
             <CountryCard
               country={country}

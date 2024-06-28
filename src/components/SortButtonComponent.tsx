@@ -14,8 +14,6 @@ const SortButtonComponent = ({
   setUnselectedCountries,
   selectedCountries,
 }: SortButtonProps) => {
-  console.log(selectedCountries);
-
   const onClickHandler = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -27,6 +25,7 @@ const SortButtonComponent = ({
           (country) => !selectedCountries.some((s) => s.name === country.name)
         )
       );
+      localStorage.setItem("active", region);
     } else {
       setUnselectedCountries(
         initCountries.filter(
@@ -35,6 +34,7 @@ const SortButtonComponent = ({
             !selectedCountries.some((s) => s.name === country.name)
         )
       );
+      localStorage.setItem("active", region);
     }
   };
 
@@ -46,13 +46,19 @@ const SortButtonComponent = ({
     "Europe",
     "Oceania",
   ];
+
+  const activeButton = localStorage.getItem("active");
   return (
     <StContainer>
       {sortButtonArray.map((name, index) => (
         <div key={index}>
-          <button name={name} onClick={onClickHandler}>
+          <StContinentButton
+            name={name}
+            onClick={onClickHandler}
+            $activeCheck={activeButton === name}
+          >
             {name}
-          </button>
+          </StContinentButton>
         </div>
       ))}
     </StContainer>
@@ -60,12 +66,17 @@ const SortButtonComponent = ({
 };
 
 const StContainer = styled.div`
-  width: 80%;
+  padding: 0 1rem;
   display: flex;
   gap: 1rem;
-  & button {
-    padding: 0.5rem 1rem;
-  }
+`;
+const StContinentButton = styled.button<{ $activeCheck: boolean }>`
+  padding: 0.5rem 1rem;
+  background-color: ${(props) => (props.$activeCheck ? "#7892d7;" : "white")};
+  color: ${(props) => (props.$activeCheck ? "white" : "grey")};
+  border: 1px solid #d9d9d9;
+  border-radius: 0.5rem;
+  cursor: pointer;
 `;
 
 export default SortButtonComponent;

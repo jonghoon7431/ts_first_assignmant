@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import styled from "styled-components";
 import { CountriesWithIsSelect } from "../types/country.type";
 
@@ -46,6 +47,10 @@ const SortButtonComponent = ({
     "Europe",
     "Oceania",
   ];
+
+  useEffect(() => {
+    localStorage.removeItem("active");
+  }, []);
 
   const activeButton = localStorage.getItem("active");
   return (

@@ -1,37 +1,71 @@
+import styled from "styled-components";
 import { CountriesWithIsSelect } from "../types/country.type";
 
-interface Props {
-  unSelected: CountriesWithIsSelect[];
+interface SortButtonProps {
+  initCountries: CountriesWithIsSelect[];
+  setUnselectedCountries: React.Dispatch<
+    React.SetStateAction<CountriesWithIsSelect[]>
+  >;
+  selectedCountries: CountriesWithIsSelect[];
 }
 
-const SortButtonComponent = ({ unSelected }: Props) => {
+const SortButtonComponent = ({
+  initCountries,
+  setUnselectedCountries,
+  selectedCountries,
+}: SortButtonProps) => {
+  console.log(selectedCountries);
+
   const onClickHandler = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    unSelected.filter((country) => country.region === e.currentTarget.name);
-  };
-  //1 sortCountries state 만들어서 조건식에 추가하기
-  //2
+    const region = e.currentTarget.name;
 
+    if (region === "All") {
+      setUnselectedCountries(
+        initCountries.filter(
+          (country) => !selectedCountries.some((s) => s.name === country.name)
+        )
+      );
+    } else {
+      setUnselectedCountries(
+        initCountries.filter(
+          (country) =>
+            country.region === region &&
+            !selectedCountries.some((s) => s.name === country.name)
+        )
+      );
+    }
+  };
+
+  const sortButtonArray: string[] = [
+    "All",
+    "Africa",
+    "Americas",
+    "Asia",
+    "Europe",
+    "Oceania",
+  ];
   return (
-    <div>
-      <button name="Africa" onClick={(e) => onClickHandler(e)}>
-        Africa
-      </button>
-      <button name="Americas" onClick={(e) => onClickHandler(e)}>
-        Americas
-      </button>
-      <button name="Asia" onClick={(e) => onClickHandler(e)}>
-        Asia
-      </button>
-      <button name="Europe" onClick={(e) => onClickHandler(e)}>
-        Europe
-      </button>
-      <button name="Oceania" onClick={(e) => onClickHandler(e)}>
-        Oceania
-      </button>
-    </div>
+    <StContainer>
+      {sortButtonArray.map((name, index) => (
+        <div key={index}>
+          <button name={name} onClick={onClickHandler}>
+            {name}
+          </button>
+        </div>
+      ))}
+    </StContainer>
   );
 };
+
+const StContainer = styled.div`
+  width: 80%;
+  display: flex;
+  gap: 1rem;
+  & button {
+    padding: 0.5rem 1rem;
+  }
+`;
 
 export default SortButtonComponent;

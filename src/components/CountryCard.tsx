@@ -23,7 +23,7 @@ const StCardSection = styled.section`
   display: flex;
   flex-direction: column;
   width: 90%;
-  padding: 0.5rem;
+  padding: 1rem;
   gap: 0.5rem;
   &:hover {
     box-shadow: inset 0 0 10px #7892d7;

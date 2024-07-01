@@ -11,5 +11,5 @@
 
 ### 미리보기
 
-<img src="https://github.com/jonghoon7431/ts_first_assignmant/assets/152875407/4d76e74f-c385-448f-828d-34f2865f32a0" width="700"/>
-<img src="https://github.com/jonghoon7431/ts_first_assignmant/assets/152875407/d7a176f9-62a3-49eb-a454-3d114639ff11" width="700"/>
+<img src="https://github.com/jonghoon7431/ts_first_assignmant/assets/152875407/aba9cb94-65d2-4b2f-bab8-5534a0b8e0b7" width="700"/>
+<img src="https://github.com/jonghoon7431/ts_first_assignmant/assets/152875407/12651bcd-798c-4f8d-aeba-cba44aff6ed5" width="700"/>
